@@ -15,7 +15,7 @@ class GenZCowin():
                 break
             else:
                 print("No centers available.. Checking after 15 mins.")
-                time.sleep(30)
+                time.sleep(15*30)
                 email_body = self.date_formatter()
 
     def user_place_inputs(self):
