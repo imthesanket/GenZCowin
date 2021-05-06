@@ -19,14 +19,21 @@ class GenZCowin():
                 email_body = self.date_formatter()
 
     def user_place_inputs(self):
-        global state_id, dist_id, center_dict
-        state_dict = requests.get('https://cdn-api.co-vin.in/api/v2/admin/location/states')
-        state_id = input("Enter state id: ")
-        dist_id = input("Enter district id: ")
-        # Filter by pincode is future enhancement
-        # pincode_dict = requests.get('https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=411048&date=05-05-2021')  
-        email_body = self.date_formatter()
-        return email_body
+        global state_dict
+        try:
+            state_dict = requests.get('https://cdn-api.co-vin.in/api/v2/admin/location/states')
+            # state_id = input("Enter state id: ")
+            # dist_id = input("Enter district id: ")
+            state_id = 21                   # Maharashtra
+            dist_id = 382                   # Pune
+            # Filter by pincode is future enhancement
+            # pincode_dict = requests.get('https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=411048&date=05-05-2021')  
+            email_body = self.date_formatter()
+            return email_body
+        except Exception as e:
+            print("API Not returning current call. Retry will be done after 15 mis.") 
+            time.sleep(15*60)
+            self.user_place_inputs()
 
     def date_formatter(self):
         email_body = "\nHi! COVID-19 Vaccines are available for the age group between 18-44 years at below centers :\n"
